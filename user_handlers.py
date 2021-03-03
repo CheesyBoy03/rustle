@@ -6,7 +6,8 @@ from config import ADMIN, ADMIN_CHANNEL
 
 from menus.users.main_menu import main_menu
 from menus.users.cancel_btn import cancel_menu
-from menus.inline.lint_to_prices import price_menu
+from menus.inline.link_to_prices import price_menu
+from menus.inline.link_to_portfolio import portfolio_menu
 
 from state import Ordering
 
@@ -39,6 +40,12 @@ async def answer_about_services(message: types.Message):
 @dp.message_handler(lambda message: message.text == 'Цены' and message.chat.type == 'private')
 async def link_to_prices(message: types.Message):
     await message.answer('Тут вы можете ознакомиться с нашим прайсом:', reply_markup=price_menu)
+
+
+# Отправляет ссылку на канал с портфолио
+@dp.message_handler(lambda message: message.text == 'Портфолио' and message.chat.type == 'private')
+async def link_to_prices(message: types.Message):
+    await message.answer('Тут вы можете ознакомиться с нашим портфолио:', reply_markup=portfolio_menu)
 
 
 # Оформление заявки для заказа
