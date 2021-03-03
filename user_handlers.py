@@ -8,6 +8,8 @@ from menus.users.main_menu import main_menu
 from menus.users.cancel_btn import cancel_menu
 from menus.inline.link_to_prices import price_menu
 from menus.inline.link_to_portfolio import portfolio_menu
+from menus.inline.link_to_services import services_menu
+from menus.inline.link_to_reviews import reviews_menu
 
 from state import Ordering
 
@@ -27,13 +29,13 @@ async def hello(message: types.Message):
 @dp.message_handler(lambda message: message.text == 'Отмена' and message.chat.type == 'private')
 async def cancel_of_ordering(message: types.Message, state=FSMContext):
     await state.finish()
-    await message.answer('Отмена', reply_markup=main_menu)
+    await message.answer('Отмена', reply_markup=main_menu)                                                      
 
 
-# Возвращение списка услуг
-@dp.message_handler(lambda message: message.text == 'Услуги' and message.chat.type == 'private')
-async def answer_about_services(message: types.Message):
-    await message.answer('Пока услуг нет, но скоро появятся, не переживайте')
+# Отправляет ссылку на канал с прайс-листом
+@dp.message_handler(lambda message: message.text == 'Отзывы' and message.chat.type == 'private')
+async def link_to_prices(message: types.Message):
+    await message.answer('Тут вы можете ознакомиться с отзывами о нас', reply_markup=reviews_menu)
 
 
 # Отправляет ссылку на канал с прайс-листом
@@ -44,8 +46,14 @@ async def link_to_prices(message: types.Message):
 
 # Отправляет ссылку на канал с портфолио
 @dp.message_handler(lambda message: message.text == 'Портфолио' and message.chat.type == 'private')
-async def link_to_prices(message: types.Message):
+async def link_to_portfolio(message: types.Message):
     await message.answer('Тут вы можете ознакомиться с нашим портфолио:', reply_markup=portfolio_menu)
+
+
+# Отправляет ссылку на канал со списком предоставляемых услуг
+@dp.message_handler(lambda message: message.text == 'Услуги' and message.chat.type == 'private')
+async def link_to_services(message: types.Message):
+    await message.answer('Тут вы можете ознакомиться с нашими услугами:', reply_markup=services_menu)
 
 
 # Оформление заявки для заказа
