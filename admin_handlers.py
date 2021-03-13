@@ -8,13 +8,7 @@ from config import ADMIN
 from menus.admin.delete_menu import delete
 from menus.users.main_menu import main_menu
 
-@dp.message_handler(lambda message: message.text == '/start' and message.from_user.id in ADMIN and message.chat.type == 'private')
-async def hello(message: types.Message):
-    msg_text = """
-Че надо-то?
-    """
-    await bot.send_message(message.chat.id, msg_text, reply_markup=main_menu)
-    print(message)
+import tg_analytic
 
 
 #Узнаем id вашего чата
@@ -27,3 +21,15 @@ async def return_chat_id(message: types.Message):
 @dp.message_handler(lambda message: message.text == '/clear' and message.from_user.id in ADMIN)
 async def delete_menu(message: types.Message):
     await message.answer('А, ой', reply_markup=ReplyKeyboardRemove())
+
+@dp.message_handler(lambda message: message.text[:10].lower() == 'статистика' and message.from_user.id in ADMIN)
+async def test(message: types.Message):
+    st = message.text.split(' ')
+    if 'txt' in st or 'тхт' in st:
+        tg_analytic.analysis(st,message.chat.id)
+        with open('%s.txt' %message.chat.id ,'r',encoding='UTF-8') as file:
+            await bot.send_document(message.chat.id,file)
+        tg_analytic.remove(message.chat.id)
+    else:
+        messages = tg_analytic.analysis(st,message.chat.id)
+        await bot.send_message(message.chat.id, messages) 
