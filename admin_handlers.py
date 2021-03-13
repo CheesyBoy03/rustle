@@ -5,7 +5,6 @@ from main_variables import bot, dp, types
 
 from config import ADMIN
 
-from menus.admin.delete_menu import delete
 from menus.users.main_menu import main_menu
 
 import tg_analytic
