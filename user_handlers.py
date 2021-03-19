@@ -15,6 +15,7 @@ from state import Ordering
 
 import tg_analytic
 
+_commands = ['Отмена', '💬Отзывы', '💳Цены', '🗂Портфолио', '🔖Услуги', '✏️Сделать заказ']
 
 # Встречаем нового пользователя нашего бота
 @dp.message_handler(lambda message: message.text == '/start' and message.from_user.id not in ADMIN and message.chat.type == 'private')
@@ -36,40 +37,48 @@ async def cancel_of_ordering(message: types.Message, state=FSMContext):
 
 
 # Отправляет ссылку на канал с прайс-листом
-@dp.message_handler(lambda message: message.text == 'Отзывы' and message.chat.type == 'private')
+@dp.message_handler(lambda message: message.text == '💬Отзывы' and message.chat.type == 'private')
 async def link_to_prices(message: types.Message):
     tg_analytic.statistics(message.chat.id, message.text)
     await message.answer('Только самые правдивые отзывы: ', reply_markup=reviews_menu)
 
 
 # Отправляет ссылку на канал с прайс-листом
-@dp.message_handler(lambda message: message.text == 'Цены' and message.chat.type == 'private')
+@dp.message_handler(lambda message: message.text == '💳Цены' and message.chat.type == 'private')
 async def link_to_prices(message: types.Message):
     tg_analytic.statistics(message.chat.id, message.text)
     await message.answer('Актуальные цены на сегодняшний день:', reply_markup=price_menu)
 
 
 # Отправляет ссылку на канал с портфолио
-@dp.message_handler(lambda message: message.text == 'Портфолио' and message.chat.type == 'private')
+@dp.message_handler(lambda message: message.text == '🗂Портфолио' and message.chat.type == 'private')
 async def link_to_portfolio(message: types.Message):
     tg_analytic.statistics(message.chat.id, message.text)
     await message.answer('Что вас интересует?', reply_markup=portfolio_menu)
 
 
 # Отправляет ссылку на канал со списком предоставляемых услуг
-@dp.message_handler(lambda message: message.text == 'Услуги' and message.chat.type == 'private')
+@dp.message_handler(lambda message: message.text == '🔖Услуги' and message.chat.type == 'private')
 async def link_to_services(message: types.Message):
     tg_analytic.statistics(message.chat.id, message.text)
     await message.answer('Тут вы можете ознакомиться с нашими услугами:', reply_markup=services_menu)
 
 
+@dp.message_handler(lambda message: message.text not in _commands)
+async def answer(message: types.Message):
+    print(message)
+    with open('AnimatedSticker.tgs', 'r') as sticker:
+        await message.answer_sticker(r'CAACAgIAAxkBAAL_YWBTqRFBJ6cUl6J090JXfATjxe-TAAJHAwACbbBCA1JVK_k1xYCCHgQ')
+        await message.answer('Моя твоя не понимать, лучше пиши буквами')
+
+
 # Оформление заявки для заказа
-@dp.message_handler(lambda message: message.text == 'Сделать заказ' and message.chat.type == 'private')
+@dp.message_handler(lambda message: message.text == '✏️Сделать заказ' and message.chat.type == 'private')
 async def ordering(message: types.Message):
     await message.answer("""
 Здравствуйте!
 
-Для того, чтобы заказать дизайн - заполните форму 👇
+Для того, чтобы оформить заказ - заполните форму 👇
 
 1. Что хотите заказать?
 2. В какие сроки нужно уложиться?

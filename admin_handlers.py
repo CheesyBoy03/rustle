@@ -21,6 +21,8 @@ async def return_chat_id(message: types.Message):
 async def delete_menu(message: types.Message):
     await message.answer('А, ой', reply_markup=ReplyKeyboardRemove())
 
+
+# Получаем статистику о пользователях или(и) о использованных командах
 @dp.message_handler(lambda message: message.text[:10].lower() == 'статистика' and message.from_user.id in ADMIN)
 async def test(message: types.Message):
     st = message.text.split(' ')
