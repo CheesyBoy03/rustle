@@ -1,9 +1,13 @@
-from aiogram.dispatcher import FSMContext
+# - * - coding: utf- 8 * -
+from aiogram.dispatcher import FSMContext  # pip install aiogram
 
+# Переменные для работы бота
 from main_variables import bot, dp, types
 
+# Импорт списка id админов и id главного канала
 from config import ADMIN, ADMIN_CHANNEL
 
+# Импорт всех менюшек
 from menus.users.main_menu import main_menu
 from menus.users.cancel_btn import cancel_menu
 from menus.inline.link_to_prices import price_menu
@@ -11,10 +15,13 @@ from menus.inline.link_to_portfolio import portfolio_menu
 from menus.inline.link_to_services import services_menu
 from menus.inline.link_to_reviews import reviews_menu
 
+# Класс состояний для принятия заказов 
 from state import Ordering
 
+# Встроенная аналитика
 import tg_analytic
 
+# Список команд, на которые отвечает бот
 _commands = ['Отмена', '💬Отзывы', '💳Цены', '🗂Портфолио', '🔖Услуги', '✏️Сделать заказ']
 
 # Встречаем нового пользователя нашего бота
@@ -26,7 +33,6 @@ async def hello(message: types.Message):
 Че надо-то?
     """
     await bot.send_message(message.chat.id, msg_text, reply_markup=main_menu)
-    print(message)
 
 
 # Кнопка отмены оформления заказа, возвращает главное меню
@@ -63,8 +69,8 @@ async def link_to_services(message: types.Message):
     tg_analytic.statistics(message.chat.id, message.text)
     await message.answer('Тут вы можете ознакомиться с нашими услугами:', reply_markup=services_menu)
 
-
-@dp.message_handler(lambda message: message.text not in _commands)
+# Обработчик других сообщений, которые не известны боту
+@dp.message_handler(lambda message: message.text not in _commands and message.chat.id not in ADMIN)
 async def answer(message: types.Message):
     print(message)
     with open('AnimatedSticker.tgs', 'r') as sticker:
@@ -88,6 +94,7 @@ async def ordering(message: types.Message):
     await Ordering.info_about_service.set()
 
 
+# Принятие заказа и отправка сообщения в канал администраторов
 @dp.message_handler(state=Ordering.info_about_service)
 async def end_of_ordering(message: types.Message, state: FSMContext):
     async with state.proxy() as data:

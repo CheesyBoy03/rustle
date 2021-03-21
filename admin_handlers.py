@@ -1,6 +1,9 @@
 from aiogram import  types
 from aiogram.types import ReplyKeyboardRemove
 
+import logging
+import datetime
+
 from main_variables import bot, dp, types
 
 from config import ADMIN
@@ -26,11 +29,17 @@ async def delete_menu(message: types.Message):
 @dp.message_handler(lambda message: message.text[:10].lower() == 'статистика' and message.from_user.id in ADMIN)
 async def test(message: types.Message):
     st = message.text.split(' ')
-    if 'txt' in st or 'тхт' in st:
-        tg_analytic.analysis(st,message.chat.id)
-        with open('%s.txt' %message.chat.id ,'r',encoding='UTF-8') as file:
-            await bot.send_document(message.chat.id,file)
-        tg_analytic.remove(message.chat.id)
-    else:
-        messages = tg_analytic.analysis(st,message.chat.id)
-        await bot.send_message(message.chat.id, messages) 
+
+    try:
+        if 'txt' in st or 'тхт' in st:
+            tg_analytic.analysis(st,message.chat.id)
+            with open('%s.txt' %message.chat.id ,'r',encoding='UTF-8') as file:
+                await bot.send_document(message.chat.id,file)
+            tg_analytic.remove(message.chat.id)
+        else:
+            messages = tg_analytic.analysis(st,message.chat.id)
+            await bot.send_message(message.chat.id, messages) 
+    except Exception:
+        # logging.error(f"{datetime.datetime.now()}: {message}")
+        with open('logging.txt', 'a') as file_logging:
+            file_logging.write(f'{datetime.datetime.now()}: {message}')

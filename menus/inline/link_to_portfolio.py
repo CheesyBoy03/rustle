@@ -1,3 +1,4 @@
+# - * - coding: utf- 8 * -
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 
 # link = InlineKeyboardButton(text='Ознакомиться', url='https://t.me/rustleportfolio')
