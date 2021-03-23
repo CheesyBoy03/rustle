@@ -6,20 +6,23 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeybo
 # portfolio_menu = InlineKeyboardMarkup().add(link)
 
 web_design_btn = InlineKeyboardButton(
-    text='Веб-дизайн', 
+    text='Веб-дизайн💻', 
     url='https://t.me/rustleportfolio'
     )
+
 layout_btn = InlineKeyboardButton(
-    text='Верстка сайтов', 
+    text='Разработка сайтов🔑', 
     url='https://t.me/rustleportfolio'
     )
+
 bots_btn = InlineKeyboardButton(
     text='Разработка ботов', 
     url='https://t.me/rustleportfolio'
     )
+
 design_of_social_networks_btn = InlineKeyboardButton(
-    text='Оформление соц. сетей', 
+    text='Оформление соц. сетей👩‍💻', 
     url='https://t.me/rustleportfolio'
     )
 
-portfolio_menu = InlineKeyboardMarkup().row(web_design_btn).row(layout_btn).row(bots_btn)
+portfolio_menu = InlineKeyboardMarkup().row(web_design_btn).row(layout_btn) #.row(bots_btn)

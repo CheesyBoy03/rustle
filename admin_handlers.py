@@ -40,6 +40,5 @@ async def test(message: types.Message):
             messages = tg_analytic.analysis(st,message.chat.id)
             await bot.send_message(message.chat.id, messages) 
     except Exception:
-        # logging.error(f"{datetime.datetime.now()}: {message}")
         with open('logging.txt', 'a') as file_logging:
             file_logging.write(f'{datetime.datetime.now()}: {message}')
