@@ -25,4 +25,4 @@ design_of_social_networks_btn = InlineKeyboardButton(
     url='https://t.me/rustleportfolio'
     )
 
-portfolio_menu = InlineKeyboardMarkup().row(web_design_btn).row(layout_btn) #.row(bots_btn)
+portfolio_menu = InlineKeyboardMarkup().row(web_design_btn).row(layout_btn)

@@ -75,7 +75,7 @@ async def answer(message: types.Message):
     print(message)
     with open('AnimatedSticker.tgs', 'r') as sticker:
         await message.answer_sticker(r'CAACAgIAAxkBAAL_YWBTqRFBJ6cUl6J090JXfATjxe-TAAJHAwACbbBCA1JVK_k1xYCCHgQ')
-        await message.answer('Моя твоя не понимать, лучше пиши буквами')
+        await message.answer('Моя твоя не понимать')
 
 
 # Оформление заявки для заказа
