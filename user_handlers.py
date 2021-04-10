@@ -46,14 +46,14 @@ async def cancel_of_ordering(message: types.Message, state=FSMContext):
 @dp.message_handler(lambda message: message.text == '💬Отзывы' and message.chat.type == 'private')
 async def link_to_prices(message: types.Message):
     tg_analytic.statistics(message.chat.id, message.text)
-    await message.answer('Самые правдивые отзывы за нашу честную работу:', reply_markup=reviews_menu)
+    await message.answer('👉🏻 Самые правдивые отзывы за нашу честную работу:', reply_markup=reviews_menu)
 
 
 # Отправляет ссылку на канал с прайс-листом
 @dp.message_handler(lambda message: message.text == '💳Цены' and message.chat.type == 'private')
 async def link_to_prices(message: types.Message):
     tg_analytic.statistics(message.chat.id, message.text)
-    await message.answer('Для ознакомления с нашим прайслистом можешь перейти по ссылке:', reply_markup=price_menu)
+    await message.answer('👉🏻 Для ознакомления с нашим прайслистом можешь перейти по ссылке:', reply_markup=price_menu)
 
 
 # Отправляет ссылку на канал с портфолио
@@ -67,7 +67,7 @@ async def link_to_portfolio(message: types.Message):
 @dp.message_handler(lambda message: message.text == '🔖Услуги' and message.chat.type == 'private')
 async def link_to_services(message: types.Message):
     tg_analytic.statistics(message.chat.id, message.text)
-    await message.answer('У нас пока не такой уж и большой спектр услуг, но в качестве имеющихся вариантов мы уверены:', reply_markup=services_menu)
+    await message.answer('👉🏻 У нас пока не такой уж и большой спектр услуг, но в качестве имеющихся вариантов мы уверены:', reply_markup=services_menu)
 
 # Обработчик других сообщений, которые не известны боту
 @dp.message_handler(lambda message: message.text not in _commands and message.chat.id not in ADMIN)
